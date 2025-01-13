@@ -1,0 +1,20 @@
+{
+  "cells": {
+    "A1": "10",
+    "A2": "20",
+    "A3": "=SUM(A1:A2)",
+    "B1": "Hello World",
+    "B2": "=UPPER(B1)",
+    "B3": "=TRIM(B1)",
+    "C1": "2025-01-01",
+    "C2": "=DATE(C1)",
+    "C3": "=COUNT(A1:A2)",
+    "D1": "50",
+    "D2": "30",
+    "D3": "=AVERAGE(D1:D2)",
+    "E1": "   Trim this    ",
+    "E2": "=TRIM(E1)"
+  },
+  "rows": 10,
+  "columns": 5
+}

@@ -1,0 +1,249 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Application Layout */
+.main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #e9ecef;
+}
+
+/* Header Section */
+.header {
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Navigation Menu */
+.nav-content {
+    display: flex;
+    align-items: center;
+    background-color: #007bff;
+}
+
+.nav-menu {
+    padding: 10px 15px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.nav-menu:hover {
+    background-color: #0056b3;
+}
+
+.nav-active {
+    background-color: #fff;
+    color: #007bff;
+}
+
+/* Cell Styles Toolbar */
+.cell-styles {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 10px;
+    overflow-x: auto;
+}
+
+.cell-styles > * {
+    padding: 5px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-icons:hover, .cell-styles select, .cell-styles button {
+    cursor: pointer;
+}
+
+.cell-styles select {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Active Cell Data Section */
+.active-cell-data {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+}
+
+.active-cell-data > input {
+    flex: 1;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+}
+
+.address-bar {
+    padding: 3px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Grid Section */
+.grid {
+    flex: 1;
+    overflow: auto;
+    background-color: #fff;
+    position: relative;
+}
+
+.grid-header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    background-color: #e9ecef;
+    z-index: 2;
+}
+
+.grid-header-col {
+    min-width: 100px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.row {
+    display: flex;
+}
+
+.grid-cell {
+    min-width: 100px;
+    height: 30px;
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #ccc;
+    word-wrap: break-word;
+}
+
+.grid-cell:focus {
+    border: 2px dashed #007bff;
+    background-color: #eef7ff;
+}
+
+.row > .grid-cell:first-child {
+    background-color: #e9ecef;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Footer Section */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: #f1f1f1;
+    gap: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.new-sheet {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.new-sheet:hover {
+    background-color: #0056b3;
+}
+
+.sheet-menu {
+    padding: 5px 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.sheet-menu:hover {
+    background-color: #d6dbdf;
+}
+
+.active-sheet {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Chart Options */
+.chart-options {
+    margin: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.chart-options button {
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chart-options button:hover {
+    background-color: #0056b3;
+}
+
+/* Chart Container */
+.chart-container {
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Scrollbar Customization */
+.grid::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.grid::-webkit-scrollbar-track {
+    background: #e9ecef;
+}
+
+.grid::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 5px;
+}
