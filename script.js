@@ -122,3 +122,40 @@ function cellFocusOut(event){
     document.getElementById(event.target.id.slice(0, 1)).classList.remove('row-col-focus');
     document.getElementById(event.target.id.slice(1)).classList.remove('row-col-focus');
 }
+
+function createGrid(rows = 100, columns = 26) {
+    const gridContainer = document.querySelector('.grid');
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 1; i <= rows; i++) {
+        const newRow = document.createElement('div');
+        newRow.className = 'row';
+
+        const rowHeader = document.createElement('div');
+        rowHeader.className = 'grid-cell';
+        rowHeader.innerText = i;
+        rowHeader.id = `row-${i}`;
+        newRow.append(rowHeader);
+
+        for (let j = 65; j < 65 + columns; j++) {
+            const cell = document.createElement('div');
+            cell.className = 'grid-cell cell-focus';
+            cell.id = `${String.fromCharCode(j)}${i}`;
+            cell.contentEditable = true;
+
+            attachCellListeners(cell);
+            newRow.append(cell);
+        }
+
+        fragment.append(newRow);
+    }
+
+    gridContainer.append(fragment);
+}
+
+function attachCellListeners(cell) {
+    cell.addEventListener('click', (e) => e.stopPropagation());
+    cell.addEventListener('focus', cellFocus);
+    cell.addEventListener('focusout', cellFocusOut);
+    cell.addEventListener('input', cellInput);
+}

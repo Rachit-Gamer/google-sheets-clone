@@ -6,27 +6,41 @@
 const dependencyGraph = {}; // { cellId: [dependentCellIds] }
 
 // Evaluate formulas entered into cells
-function evaluateFormula(formula, currentCell = null) {
-    if (!formula.startsWith('=')) return formula; // Not a formula
+function evaluateFormula(input) {
+    if (!input.startsWith('=')) return input; // Not a formula, return as-is
 
-    try {
-        // Remove '=' and extract function name and range
-        const cleanedFormula = formula.slice(1);
+    const formula = input.slice(1).trim(); // Remove '=' and any leading/trailing spaces
 
-        // Replace ranges or cell references with their evaluated values
-        const parsedFormula = cleanedFormula.replace(/([A-Z]+\d+:[A-Z]+\d+|[A-Z]+\d+)/g, (match) => {
-            const cells = match.includes(':') ? extractCells(...match.split(':'), currentCell) : [match];
-            const values = cells.map(cellId => Number(activeSheetObject[cellId]?.content || 0));
-            return values.length === 1 ? values[0] : `[${values.join(',')}]`;
-        });
-
-        // Evaluate the formula using JavaScript
-        return eval(parsedFormula);
-    } catch (error) {
-        console.error(`Error evaluating formula "${formula}":`, error);
-        return "Error";
+    // Recognize and handle specific functions
+    if (formula.startsWith('upperCell')) {
+        const match = formula.match(/upperCell\(['"]?(.*?)['"]?\)/);
+        if (match && match[1]) {
+            upperCell(match[1]);
+            return document.getElementById(match[1]).innerText; // Return updated cell value
+        }
     }
+
+    if (formula.startsWith('lowerCell')) {
+        const match = formula.match(/lowerCell\(['"]?(.*?)['"]?\)/);
+        if (match && match[1]) {
+            lowerCell(match[1]);
+            return document.getElementById(match[1]).innerText; // Return updated cell value
+        }
+    }
+
+    if (formula.startsWith('trimCell')) {
+        const match = formula.match(/trimCell\(['"]?(.*?)['"]?\)/);
+        if (match && match[1]) {
+            trimCell(match[1]);
+            return document.getElementById(match[1]).innerText; // Return updated cell value
+        }
+    }
+
+    // Add more custom function handlers here...
+
+    return 'Invalid Formula';
 }
+
 
 // Extract cell IDs from a range (e.g., A1:B5)
 function extractCells(startCell, endCell, currentCell = null) {
@@ -120,22 +134,14 @@ function updateDependentCells(cellId) {
  */
 
 // Handle formula input in the formula bar
-formula.addEventListener('input', (event) => {
-    if (activeCell) {
-        const formulaInput = event.target.value;
-        activeSheetObject[activeCell.id].content = formulaInput;
-
-        if (formulaInput.startsWith('=')) {
-            // Update dependencies and evaluate formula
-            updateDependencies(activeCell.id, formulaInput);
-            const result = evaluateFormula(formulaInput, activeCell.id);
-            activeCell.innerText = result;
-        } else {
-            // Direct content assignment for non-formula input
-            activeCell.innerText = formulaInput;
+formula.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (activeCell) {
+            const result = evaluateFormula(formula.value); // Process the formula
+            activeCell.innerText = result; // Update the cell with the result
+            activeSheetObject[activeCell.id].content = result; // Sync the data model
         }
-
-        // Update dependent cells
-        updateDependentCells(activeCell.id);
+        event.preventDefault(); // Prevent default Enter behavior
     }
 });
+
