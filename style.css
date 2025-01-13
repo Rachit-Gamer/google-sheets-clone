@@ -127,7 +127,24 @@ body.dark-mode {
     flex: 1;
 }
 
-
+/* Add Row/Column Buttons */
+.row-column-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 10px 20px;
+}
+.add-row, .add-column {
+    padding: 10px;
+    background-color: var(--highlight-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.add-row:hover, .add-column:hover {
+    background-color: #27ae60;
+}
 
 /* width */
 /* .grid::-webkit-scrollbar {
@@ -215,7 +232,6 @@ body.dark-mode {
     color: white;
     border: 1px solid black;
 }
-
 
 
 .footer{
