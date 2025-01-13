@@ -1,8 +1,3 @@
-/**
- * Spreadsheet Initialization
- */
-
-// Initial state for each cell
 const initialCellState = {
     fontFamily_data: 'monospace',
     fontSize_data: '14',
@@ -13,156 +8,117 @@ const initialCellState = {
     color: '#000000',
     backgroundColor: '#ffffff',
     content: ''
-};
+}
 
 let sheetsArray = [];
+
 let activeSheetIndex = -1;
-let activeSheetObject = null;
-let activeCell = null;
 
-// DOM references for toolbar and formula bar
-const fontFamilyBtn = document.querySelector('.font-family');
-const fontSizeBtn = document.querySelector('.font-size');
-const boldBtn = document.querySelector('.bold');
-const italicBtn = document.querySelector('.italic');
-const underlineBtn = document.querySelector('.underline');
-const colorBtn = document.querySelector('#color');
-const bgColorBtn = document.querySelector('#bgcolor');
-const addressBar = document.querySelector('.address-bar');
-const formula = document.querySelector('.formula-bar');
+let activeSheetObject = false;
 
-/**
- * Grid and Sheet Rendering
- */
+let activeCell = false;
 
-// Initialize the grid and headers
-function initializeGrid() {
-    const gridHeader = document.querySelector('.grid-header');
 
-    // Add column headers (A-Z)
-    for (let col = 65; col <= 90; col++) {
-        const columnHeader = document.createElement('div');
-        columnHeader.className = 'grid-header-col';
-        columnHeader.innerText = String.fromCharCode(col);
-        gridHeader.appendChild(columnHeader);
-    }
+// functionality elments
+let fontFamilyBtn = document.querySelector('.font-family');
+let fontSizeBtn = document.querySelector('.font-size');
+let boldBtn = document.querySelector('.bold');
+let italicBtn = document.querySelector('.italic');
+let underlineBtn = document.querySelector('.underline');
+let leftBtn = document.querySelector('.start');
+let centerBtn = document.querySelector('.center');
+let rightBtn = document.querySelector('.end');
+let colorBtn = document.querySelector('#color');
+let bgColorBtn = document.querySelector('#bgcolor');
+let addressBar = document.querySelector('.address-bar');
+let formula = document.querySelector('.formula-bar');
+let downloadBtn = document.querySelector(".download");
+let openBtn = document.querySelector(".open");
 
-    const grid = document.querySelector('.grid');
-    for (let row = 1; row <= 100; row++) {
-        const newRow = document.createElement('div');
-        newRow.className = 'row';
+// grid header ro element
+let gridHeader = document.querySelector('.grid-header');
 
-        const rowHeader = document.createElement('div');
-        rowHeader.className = 'grid-cell';
-        rowHeader.innerText = row;
-        newRow.appendChild(rowHeader);
+// add header column
+let bold = document.createElement('div');
+bold.className = 'grid-header-col';
+bold.innerText = 'SL. NO.';
+gridHeader.append(bold);
+for(let i = 65; i<=90; i++){
+    let bold = document.createElement('div');
+    bold.className = 'grid-header-col';
+    bold.innerText = String.fromCharCode(i);
+    bold.id = String.fromCharCode(i);
+    gridHeader.append(bold);
+}
 
-        for (let col = 65; col <= 90; col++) {
-            const cell = document.createElement('div');
-            cell.className = 'grid-cell';
-            cell.id = String.fromCharCode(col) + row;
-            cell.contentEditable = true;
-            newRow.appendChild(cell);
-        }
 
-        grid.appendChild(newRow);
+for(let i = 1; i<=100; i++){
+    let newRow = document.createElement('div')
+    newRow.className = 'row';
+    document.querySelector('.grid').append(newRow);
+
+    let bold = document.createElement('div');
+    bold.className = 'grid-cell';
+    bold.innerText = i;
+    bold.id = i;
+    newRow.append(bold);
+
+    for(let j = 65; j<=90; j++){
+        let cell = document.createElement('div');
+        cell.className = 'grid-cell cell-focus';
+        cell.id = String.fromCharCode(j) + i;
+        cell.contentEditable = true;
+
+        cell.addEventListener('click', (event) => {
+            event.stopPropagation();
+        })
+        cell.addEventListener('focus', cellFocus);
+        cell.addEventListener('focusout', cellFocusOut);
+        cell.addEventListener('input', cellInput);
+
+        newRow.append(cell);
     }
 }
 
-document.addEventListener('DOMContentLoaded', initializeGrid);
-
-
-// Cell focus event
-function cellFocus(event) {
-    const cellId = event.target.id;
-    addressBar.innerText = cellId;
+function cellFocus(event){
+    let key = event.target.id;
+    addressBar.innerHTML = event.target.id;
     activeCell = event.target;
 
-    // Apply stored styles to the toolbar
-    const cellState = activeSheetObject[cellId];
-    fontFamilyBtn.value = cellState.fontFamily_data;
-    fontSizeBtn.value = cellState.fontSize_data;
-    boldBtn.style.backgroundColor = cellState.isBold ? '#c9c8c8' : '#ecf0f1';
-    italicBtn.style.backgroundColor = cellState.isItalic ? '#c9c8c8' : '#ecf0f1';
-    underlineBtn.style.backgroundColor = cellState.isUnderlined ? '#c9c8c8' : '#ecf0f1';
-    colorBtn.value = cellState.color;
-    bgColorBtn.value = cellState.backgroundColor;
-    formula.value = cellState.content;
+    let activeBg = '#c9c8c8';
+    let inactiveBg = '#ecf0f1';
+
+    fontFamilyBtn.value = activeSheetObject[key].fontFamily_data;
+    fontSizeBtn.value = activeSheetObject[key].fontSize_data;
+    boldBtn.style.backgroundColor = activeSheetObject[key].isBold?activeBg:inactiveBg;
+    italicBtn.style.backgroundColor = activeSheetObject[key].isItalic?activeBg:inactiveBg;
+    underlineBtn.style.backgroundColor = activeSheetObject[key].isUnderlined?activeBg:inactiveBg;
+    setAlignmentBg(key, activeBg, inactiveBg);
+    colorBtn.value = activeSheetObject[key].color;
+    bgColorBtn.value = activeSheetObject[key].backgroundColor;
+
+    formula.value = activeCell.innerText;
+
+    document.getElementById(event.target.id.slice(0, 1)).classList.add('row-col-focus');
+    document.getElementById(event.target.id.slice(1)).classList.add('row-col-focus');
 }
-
-// Cell input event
-function cellInput() {
-    const cellId = activeCell.id;
-    const content = activeCell.innerText;
-    activeSheetObject[cellId].content = content;
-
-    // Update dependent cells
-    updateDependentCells(cellId);
+function cellInput(){
+    let key = activeCell.id;
+    formula.value = activeCell.innerText;
+    activeSheetObject[key].content = activeCell.innerText;
 }
-
-// Cell focus out event
-function cellFocusOut(event) {
-    document.getElementById(event.target.id.slice(0, 1)).classList.remove('row-col-focus');
-}
-
-/**
- * Sheet Management
- */
-
-// Create a new sheet
-function createNewSheet() {
-    const newSheet = {};
-    for (let row = 1; row <= 100; row++) {
-        for (let col = 65; col <= 90; col++) {
-            const cellId = String.fromCharCode(col) + row;
-            newSheet[cellId] = { ...initialCellState };
-        }
+function setAlignmentBg(key, activeBg, inactiveBg){
+    leftBtn.style.backgroundColor = inactiveBg;
+    centerBtn.style.backgroundColor = inactiveBg;
+    rightBtn.style.backgroundColor = inactiveBg;
+    if(key){
+        document.querySelector('.'+ activeSheetObject[key].textAlign).style.backgroundColor = activeBg;
     }
-
-    sheetsArray.push(newSheet);
-    activeSheetIndex = sheetsArray.length - 1;
-    activeSheetObject = newSheet;
-
-    // Add new sheet button in footer
-    const sheetMenu = document.createElement('div');
-    sheetMenu.className = 'sheet-menu';
-    sheetMenu.innerText = `Sheet ${sheetsArray.length}`;
-    sheetMenu.addEventListener('click', () => switchSheet(sheetsArray.length - 1));
-    document.querySelector('.footer').appendChild(sheetMenu);
-
-    renderSheet();
+    else{
+        leftBtn.style.backgroundColor = activeBg;
+    }
 }
-
-// Switch to an existing sheet
-function switchSheet(index) {
-    activeSheetIndex = index;
-    activeSheetObject = sheetsArray[index];
-    renderSheet();
+function cellFocusOut(event){
+    document.getElementById(event.target.id.slice(0, 1)).classList.remove('row-col-focus');
+    document.getElementById(event.target.id.slice(1)).classList.remove('row-col-focus');
 }
-
-// Render the active sheet
-function renderSheet() {
-    Object.keys(activeSheetObject).forEach(cellId => {
-        const cell = document.getElementById(cellId);
-        const cellState = activeSheetObject[cellId];
-        cell.innerText = cellState.content;
-        cell.style.fontFamily = cellState.fontFamily_data;
-        cell.style.fontSize = `${cellState.fontSize_data}px`;
-        cell.style.fontWeight = cellState.isBold ? 'bold' : 'normal';
-        cell.style.fontStyle = cellState.isItalic ? 'italic' : 'normal';
-        cell.style.textDecoration = cellState.isUnderlined ? 'underline' : 'none';
-        cell.style.textAlign = cellState.textAlign;
-        cell.style.color = cellState.color;
-        cell.style.backgroundColor = cellState.backgroundColor;
-    });
-}
-
-/**
- * Initialization
- */
-
-// Initialize the first sheet and grid
-document.addEventListener('DOMContentLoaded', () => {
-    initializeGrid();
-    createNewSheet();
-});

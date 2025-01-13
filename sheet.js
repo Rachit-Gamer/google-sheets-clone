@@ -1,105 +1,98 @@
-/**
- * Sheet Management and Rendering
- */
+document.querySelector('.new-sheet').addEventListener('click', createNewSheet);
 
-let sheetsArray = [];
-let activeSheetIndex = -1;
-let activeSheetObject = null;
-
-/**
- * Create a new sheet
- */
-function createNewSheet() {
-    const newSheet = {};
-
-    // Initialize cells for the sheet
-    for (let row = 1; row <= 100; row++) {
-        for (let col = 65; col <= 90; col++) {
-            const cellId = String.fromCharCode(col) + row;
-            newSheet[cellId] = { ...initialCellState };
+// It will create new sheet
+function createNewSheet(event){
+    let newCellStateObject = {};
+    for(let i = 1; i<=100; i++){
+        for(let j = 65; j<=90; j++){
+            let key = String.fromCharCode(j) + i;
+            newCellStateObject[key] = {...initialCellState};
         }
     }
 
-    // Add to sheets array and set as active sheet
-    sheetsArray.push(newSheet);
-    activeSheetIndex = sheetsArray.length - 1;
-    activeSheetObject = newSheet;
+    if(activeSheetIndex != -1){
+        document.getElementById('s'+(activeSheetIndex+1)).classList.remove('active-sheet');
+    }
 
-    // Add new sheet button in footer
-    const sheetMenu = document.createElement('div');
-    sheetMenu.className = 'sheet-menu';
-    sheetMenu.id = `sheet-${sheetsArray.length}`;
-    sheetMenu.innerText = `Sheet ${sheetsArray.length}`;
-    sheetMenu.addEventListener('click', () => switchSheet(activeSheetIndex));
-    document.querySelector('.footer').appendChild(sheetMenu);
+    sheetsArray.push(newCellStateObject);
+    let n = sheetsArray.length;
+    activeSheetIndex = n-1;
+    activeSheetObject = sheetsArray[activeSheetIndex];
 
-    renderSheet();
+    // sheet menu
+    let sheetMenu = document.createElement('div');
+    sheetMenu.className = 'sheet-menu active-sheet';
+    sheetMenu.id = 's' + n;
+    sheetMenu.innerText = 'Sheet ' + n;
+
+    // sheet navigation functionlity on click
+    sheetMenu.addEventListener('click', (event) => {
+        event.stopPropagation();
+
+        document.getElementById('s'+(activeSheetIndex+1)).classList.remove('active-sheet');
+        sheetMenu.classList.add('active-sheet');
+
+        activeSheetIndex = Number(event.target.id.slice(1))-1;
+        if(sheetsArray[activeSheetIndex] == activeSheetObject){
+            activeCell.focus();
+            return;
+        }
+        activeSheetObject = sheetsArray[activeSheetIndex];
+        changeSheet();
+    })
+
+    // add sheetMenu to the footer
+    document.querySelector('.footer').append(sheetMenu);
+
+    // reflecting the current object data i each and every cell
+    changeSheet();
 }
 
-/**
- * Switch to an existing sheet
- * @param {number} index - The index of the sheet to switch to
- */
-function switchSheet(index) {
-    if (index === activeSheetIndex) return;
+// Put the active sheets value in all cells
+function changeSheet(){
+    // cell style reset
+    for(let key in activeSheetObject){
+        let cell = document.getElementById(key);
+        let thisCell = activeSheetObject[key];
 
-    // Update active sheet
-    activeSheetIndex = index;
-    activeSheetObject = sheetsArray[index];
+        cell.innerText = thisCell.content;
+        cell.style.fontFamily = thisCell.fontFamily_data;
+        cell.style.fontSize = thisCell.fontSize_data;
+        cell.style.fontWeight = thisCell.isBold? '600':'400';
+        cell.style.fontStyle = thisCell.isItalic? 'italic':'normal';
+        cell.style.textDecoration = thisCell.isUnderlined? 'underline':'none';
+        cell.style.textAlign = thisCell.textAlign;
+        cell.style.color = thisCell.color;
+        cell.style.backgroundColor = thisCell.backgroundColor;
+    }
 
-    // Update sheet menu styles
-    document.querySelectorAll('.sheet-menu').forEach(menu => {
-        menu.classList.remove('active-sheet');
-    });
-    document.getElementById(`sheet-${index + 1}`).classList.add('active-sheet');
-
-    renderSheet();
+    // make the header fuctionality default
+    resetFunctionality();
 }
 
-/**
- * Render the active sheet
- */
-function renderSheet() {
-    // Reset all cells to reflect the active sheet state
-    Object.keys(activeSheetObject).forEach(cellId => {
-        const cell = document.getElementById(cellId);
-        const cellState = activeSheetObject[cellId];
-        cell.innerText = cellState.content;
-        cell.style.fontFamily = cellState.fontFamily_data;
-        cell.style.fontSize = `${cellState.fontSize_data}px`;
-        cell.style.fontWeight = cellState.isBold ? 'bold' : 'normal';
-        cell.style.fontStyle = cellState.isItalic ? 'italic' : 'normal';
-        cell.style.textDecoration = cellState.isUnderlined ? 'underline' : 'none';
-        cell.style.textAlign = cellState.textAlign;
-        cell.style.color = cellState.color;
-        cell.style.backgroundColor = cellState.backgroundColor;
-    });
-}
-
-/**
- * Add event listener to "new sheet" button
- */
-document.querySelector('.new-sheet').addEventListener('click', createNewSheet);
-
-/**
- * Utility: Reset all active functionality
- */
-function resetFunctionality() {
-    activeCell = null;
-    document.querySelector('.address-bar').innerText = 'Null';
+// reset all active functionality
+function resetFunctionality(){
+    let activeBg = '#c9c8c8';
+    let inactiveBg = '#ecf0f1';
+    
+    activeCell = false;
+    addressBar.innerHTML = 'Null';
     fontFamilyBtn.value = initialCellState.fontFamily_data;
     fontSizeBtn.value = initialCellState.fontSize_data;
-    boldBtn.style.backgroundColor = '';
-    italicBtn.style.backgroundColor = '';
-    underlineBtn.style.backgroundColor = '';
+    boldBtn.style.backgroundColor = inactiveBg;
+    italicBtn.style.backgroundColor = inactiveBg;
+    underlineBtn.style.backgroundColor = inactiveBg;
+    setAlignmentBg(false, activeBg, inactiveBg);
     colorBtn.value = initialCellState.color;
     bgColorBtn.value = initialCellState.backgroundColor;
     formula.value = '';
 }
 
-/**
- * Initialize the first sheet on page load
- */
-document.addEventListener('DOMContentLoaded', () => {
-    createNewSheet();
-});
+
+// Create first sheet
+createNewSheet();
+// createNewSheet();
+// createNewSheet();
+
+// activating the sheet 1
+// document.getElementById('s1').click();

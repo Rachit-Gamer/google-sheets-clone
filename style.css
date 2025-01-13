@@ -1,249 +1,237 @@
-/* Reset and Base Styles */
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
-body {
-    font-size: 14px;
-    color: #333;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
 
-/* Main Application Layout */
-.main {
+.main{
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #e9ecef;
+    background-color: rgb(224, 223, 223);
 }
 
-/* Header Section */
-.header {
-    background-color: #f1f1f1;
+.header{
+    background-color: #ecf0f1;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding-bottom: 5px;
     gap: 10px;
-    border-bottom: 1px solid #ccc;
+    overflow: auto;
 }
 
-/* Navigation Menu */
 .nav-content {
+    background-color: green;
     display: flex;
-    align-items: center;
-    background-color: #007bff;
 }
-
-.nav-menu {
-    padding: 10px 15px;
-    color: #fff;
-    cursor: pointer;
+.nav-menu{
+    width: 4.5rem;
     text-align: center;
-    transition: background-color 0.3s ease;
+    color: #f1f2f6;
+    padding: 10px 0;
+}
+.nav-active{
+    background-color: #ecf0f1;
+    color: green;
 }
 
-.nav-menu:hover {
-    background-color: #0056b3;
-}
-
-.nav-active {
-    background-color: #fff;
-    color: #007bff;
-}
-
-/* Cell Styles Toolbar */
-.cell-styles {
+.cell-styles{
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 5px 10px;
+    gap: 10px;
+    margin-inline: 20px;
     overflow-x: auto;
 }
-
-.cell-styles > * {
+.cell-styles>*{
     padding: 5px;
     height: 30px;
+    display: flex;
+    align-items: center;
+}
+.active-style{
+    background-color: #c9c8c8;
+}
+.material-icons:hover, .cell-styles select, .cell-styles>select>option{
+    cursor: pointer;
+}
+.cell-styles > select {
+    margin: 10px;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+}
+.font-family-selection {
+    padding: 0.2rem;
+}
+.font-size-selection {
+    padding: 0.2rem;
+}
+.color-prop{
+    position: relative;
+}
+.color-prop> input{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+
+
+.active-cell-data{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-inline: 20px;
+    gap: 20px;
+}
+.active-cell-data > input {
+    border: none;
+    outline: none;
+    padding-inline: 2px;
+    height: 80%;
+}
+.address-bar {
+    width: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
+    height: 80%;
 }
-
-.material-icons:hover, .cell-styles select, .cell-styles button {
-    cursor: pointer;
+.formula-icon {
+    width: 1.2rem;
 }
-
-.cell-styles select {
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-/* Active Cell Data Section */
-.active-cell-data {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    gap: 15px;
-    background-color: #f8f9fa;
-    border: 1px solid #ccc;
-}
-
-.active-cell-data > input {
+.formula-bar {
     flex: 1;
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    outline: none;
 }
 
-.address-bar {
-    padding: 3px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
 
-/* Grid Section */
-.grid {
-    flex: 1;
-    overflow: auto;
-    background-color: #fff;
-    position: relative;
-}
 
-.grid-header {
-    display: flex;
-    position: sticky;
-    top: 0;
-    background-color: #e9ecef;
-    z-index: 2;
-}
-
-.grid-header-col {
-    min-width: 100px;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-}
-
-.row {
-    display: flex;
-}
-
-.grid-cell {
-    min-width: 100px;
-    height: 30px;
-    text-align: left;
-    padding: 5px;
-    border: 1px solid #ccc;
-    word-wrap: break-word;
-}
-
-.grid-cell:focus {
-    border: 2px dashed #007bff;
-    background-color: #eef7ff;
-}
-
-.row > .grid-cell:first-child {
-    background-color: #e9ecef;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Footer Section */
-.footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 10px;
-    background-color: #f1f1f1;
-    gap: 15px;
-    border-top: 1px solid #ccc;
-}
-
-.new-sheet {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.new-sheet:hover {
-    background-color: #0056b3;
-}
-
-.sheet-menu {
-    padding: 5px 10px;
-    background-color: #e9ecef;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    cursor: pointer;
-    text-align: center;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.sheet-menu:hover {
-    background-color: #d6dbdf;
-}
-
-.active-sheet {
-    background-color: #007bff;
-    color: #fff;
-}
-
-/* Chart Options */
-.chart-options {
-    margin: 10px;
-    display: flex;
-    gap: 10px;
-}
-
-.chart-options button {
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.chart-options button:hover {
-    background-color: #0056b3;
-}
-
-/* Chart Container */
-.chart-container {
-    margin: 20px auto;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-}
-
-/* Scrollbar Customization */
-.grid::-webkit-scrollbar {
+/* width */
+/* .grid::-webkit-scrollbar {
     width: 10px;
     height: 10px;
+} */
+/* Track */
+/* .grid::-webkit-scrollbar-track {
+    background: white; 
+} */
+/* Handle */
+/* .grid::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #888; 
+} */
+
+.grid{
+    flex: 1;
+    overflow: auto;
+    position: sticky;
+    left: 0;
+}
+.grid-header{
+    display: flex;
+    width: fit-content;
+    
+    position: sticky;
+    top: 0;
+    z-index: 4;
+}
+.grid-header> :first-child{
+    min-width: 70px;
+    background-color: rgb(190, 188, 188);
+    position: sticky;
+    z-index: 3;
+    left: 0;
+}
+.grid-header-col{
+    min-width: 100px;
+    max-width: 100px;
+    padding: 5px 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(190, 188, 188);
+    font-weight: 900;
+}
+.row{
+    display: flex;
+    width: fit-content;
+}
+.grid-cell{
+    min-width: 100px;
+    max-width: 100px;
+    padding: 5px 2px;
+    border: 1px solid rgb(190, 188, 188);
+    word-wrap: normal;
 }
 
-.grid::-webkit-scrollbar-track {
-    background: #e9ecef;
+.row> :first-child{
+    min-width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+
+    position: sticky;
+    left: 0;
+    z-index: 2;
+}
+.grid>*>*{
+    background-color: white;
+    color: black;
+}
+.cell-focus:focus{
+    border: 1.6px dashed rgb(96, 95, 95);
+    outline: none;
+    position: relative;
+    z-index: 1;
+}
+.row-col-focus{
+    background-color: green;
+    color: white;
+    border: 1px solid black;
 }
 
-.grid::-webkit-scrollbar-thumb {
-    background: #007bff;
-    border-radius: 5px;
+
+
+.footer{
+    padding: 10px 0;
+    background-color: rgb(224, 223, 223);
+    display: flex;
+    align-items: center;
+    margin-inline: 20px;
+    overflow-x: auto;
+    gap: 20px;
+}
+
+.new-sheet{
+    background-color: rgb(224, 223, 223);
+    padding-inline: 10px;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.sheet-menu{
+    padding: 5px 10px;
+    border-radius: 3px;
+    flex: 0 0 auto;
+    /* text-decoration: underline; */
+    font-weight: bold;
+    cursor: pointer;
+    color: rgb(91, 90, 90);
+}
+
+.active-sheet{
+    color: black;
+    background-color: rgb(184, 181, 181);
+}
+
+.sheet-menu:hover{
+    color: black;
+    background-color: rgb(184, 181, 181);
 }
