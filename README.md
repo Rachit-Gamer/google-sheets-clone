@@ -43,3 +43,98 @@ The following dependencies are required for the project:
 ```bash
 git clone https://github.com/your-username/cdp-chatbot.git
 cd cdp-chatbot
+
+
+2. Install Dependencies
+Run the following command to install all dependencies:
+
+bash
+Copy code
+npm install
+3. Set Up Environment Variables
+Create a .env file in the project root and add your OpenAI API key:
+
+env
+Copy code
+OPENAI_API_KEY=your_actual_openai_api_key
+4. Ensure Documentation Files
+Place the documentation files for each CDP in the data folder:
+
+segment-docs.txt
+mparticle-docs.txt
+lytics-docs.txt
+zeotap-docs.txt
+Ensure they are in plain text format and contain the relevant documentation.
+
+5. Start the Server
+For development, use nodemon to auto-restart on file changes:
+
+bash
+Copy code
+npm run dev
+Alternatively, start the server directly:
+
+bash
+Copy code
+npm start
+6. Access the Chatbot
+Open your browser and navigate to:
+
+arduino
+Copy code
+http://localhost:3000
+Project Structure
+The project follows a modular structure:
+
+bash
+Copy code
+project-folder/
+├── certs/                 # Optional: SSL certificates (if needed)
+├── data/                  # Documentation files for CDPs
+│   ├── segment-docs.txt
+│   ├── mparticle-docs.txt
+│   ├── lytics-docs.txt
+│   └── zeotap-docs.txt
+├── public/                # Frontend assets
+│   ├── index.html         # Chatbot UI
+│   ├── style.css          # Styling for the chatbot
+│   └── script.js          # Frontend logic for message handling
+├── src/                   # Backend source code
+│   └── chatbot.js         # Main server logic
+├── .env                   # Environment variables
+├── package.json           # Project metadata and dependencies
+├── README.md              # Project documentation
+Testing
+1. Cross-CDP Comparisons
+Example Question:
+
+"How does Segment's audience creation process compare to Lytics'?" Expected Behavior:
+The chatbot highlights similarities and differences between the two platforms.
+2. Advanced "How-to" Questions
+Example Question:
+
+"How do I configure real-time triggers in mParticle for user updates?" Expected Behavior:
+The chatbot provides step-by-step guidance for setting up real-time triggers.
+Troubleshooting
+Error: "Sorry, there was an error processing your request"
+Cause: API issues, network problems, or SSL errors.
+Solution:
+Check the API key in your .env file.
+Ensure network connectivity to OpenAI's API.
+If SSL issues persist, configure the httpsAgent in chatbot.js to bypass SSL validation (for development only).
+Missing Files
+Ensure that public/index.html and all data/*.txt files are present.
+Future Enhancements
+Add support for multi-language queries.
+Implement caching to reduce API calls.
+Enhance error messages for better user feedback.
+License
+This project is licensed under the ISC License.
+
+Acknowledgments
+Built using OpenAI GPT-4.
+Inspired by modern conversational UIs like ChatGPT.
+yaml
+Copy code
+
+---
