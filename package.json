@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "chart": "^0.1.2",
     "chart.js": "^4.4.7",
     "eslint": "^9.18.0",
     "file-saver": "^2.0.5",
+    "handsontable": "^15.0.0",
     "jest": "^29.7.0",
     "live-server": "^1.2.2",
     "lodash": "^4.17.21",

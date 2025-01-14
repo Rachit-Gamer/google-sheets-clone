@@ -21,84 +21,88 @@
             </div>
 
             <div class="cell-styles">
-                <span class="material-icons copy">
+                <span class="material-icons copy" title="Copy">
                     content_copy
                 </span>
-                <span class="material-icons cut">
+                <span class="material-icons cut" title="Cut">
                     content_cut
                 </span>
-                <span class="material-icons paste">
+                <span class="material-icons paste" title="Paste">
                     content_paste
                 </span>
-                <select onchange="setFont(this)" class="font-family-selection font-family select">
+                <select title="Font Family" onchange="setFont(this)" class="font-family-selection font-family select">
                     <option value="monospace">MonoSpace</option>
                     <option value="sans-serif">Sans-serif</option>
                     <option value="fantasy">Fantasy</option>
                     <option value="cursive">Cursive</option>
                 </select>
-                <select onchange="setSize(this)" class="font-size-selection font-size select">
+                <select title="Font Size" onchange="setSize(this)" class="font-size-selection font-size select">
                     <option value="14">14</option>
                     <option value="16">16</option>
                     <option value="18">18</option>
                     <option value="20">20</option>
                 </select>
-                <span class="material-icons bold">
+                <span class="material-icons bold" title="Bold">
                     format_bold
                 </span>
-                <span class="material-icons italic">
+                <span class="material-icons italic" title="Italic">
                     format_italic
                 </span>
-                <span class="material-icons underline">
+                <span class="material-icons underline" title="Underline">
                     format_underlined
                 </span>
-                <span class="start material-icons alignment">
+                <span class="start material-icons alignment" title="Align Left">
                     format_align_left
                 </span>
-                <span class="center material-icons alignment">
+                <span class="center material-icons alignment" title="Align Center">
                     format_align_center
                 </span>
-                <span class="end material-icons alignment">
+                <span class="end material-icons alignment" title="Align Right">
                     format_align_right
                 </span>
                 <div class="color-prop">
-                    <label for="color" class="material-icons">
+                    <label for="color" class="material-icons" title="Text Color">
                         format_color_text
                     </label>
                     <input onchange="textColor(this)" type="color" name="color" id="color" class="font-color-prop">
                 </div>
                 <div class="color-prop">
-                    <label for="bgcolor" class="material-icons">
+                    <label for="bgcolor" class="material-icons" title="Background Color">
                         format_color_fill
                     </label>
                     <input onchange="backgroundColor(this)" type="color" name="bgcolor" id="bgcolor" class="BGcolor-prop">
                 </div>
-                <span class="material-icons download">
+                <span class="material-icons download" title="Download Spreadsheet">
                     cloud_download
                 </span>
-                <span class="material-icons open">
+                <span class="material-icons open" title="Upload Spreadsheet">
                     cloud_upload
                 </span>
             </div>
 
             <div class="active-cell-data">
                 <b class="address-bar" id="active_cell">Null</b>
-                <img class="formula-icon" src="https://img.icons8.com/ios/50/000000/formula-fx.png"/>
-                <input type="text" class="formula-bar">
+                <img class="formula-icon" src="https://img.icons8.com/ios/50/000000/formula-fx.png" alt="Formula Icon"/>
+                <input type="text" class="formula-bar" title="Enter Formula" placeholder="Enter formula">
             </div>
 
             <!-- Row and Column Management Buttons -->
             <div class="row-column-buttons">
-                <button class="add-row">Add Row</button>
-                <button class="add-column">Add Column</button>
+                <button class="add-row" title="Add Row">Add Row</button>
+                <button class="add-column" title="Add Column">Add Column</button>
             </div>
         </div>
 
         <div class="grid">
             <div class="grid-header"></div>
         </div>
-        
+
+        <div id="chart-container" class="chart-container">
+            <!-- Chart will be dynamically rendered here -->
+        </div>
+
         <div class="footer">
-            <span class="material-icons new-sheet">
+            <span class="material-icons new-sheet" title="Add New Sheet">
                 post_add
             </span>
         </div>
