@@ -1,62 +1,45 @@
-# Google Sheets Clone
+# CDP Chatbot
 
-A feature-rich web-based spreadsheet application inspired by Google Sheets. This application provides a clean, interactive interface and supports advanced spreadsheet functionalities like formulas, formatting, data validation, and more.
+A chatbot that answers "how-to" questions related to Customer Data Platforms (CDPs) such as **Segment**, **mParticle**, **Lytics**, and **Zeotap**. The chatbot leverages OpenAI's GPT-4 API for intelligent and context-aware responses.
 
 ---
 
 ## **Features**
+1. **Core Functionalities**:
+   - Handles "how-to" questions for each CDP.
+   - Provides actionable guidance and steps based on documentation.
 
-### **Main Features**
-- 🖋️ **Spreadsheet Interface**:
-  - Dynamic grid creation with rows and columns.
-  - Supports multiple sheets with seamless navigation.
+2. **Bonus Features**:
+   - **Cross-CDP Comparisons**: Answer questions comparing features or approaches between CDPs.
+   - **Advanced "How-to" Questions**: Address complex queries involving advanced configurations or integrations.
 
-- 📐 **Cell Formatting**:
-  - Font family, size, bold, italic, underline.
-  - Text alignment (left, center, right).
-  - Text and background color customization.
-
-- 🔢 **Mathematical Functions**:
-  - Functions like `SUM`, `AVERAGE`, `COUNT`, `MAX`, and `MIN`.
-  - Supports both individual cells and ranges (e.g., `A1:A10`).
-
-- ✂️ **Clipboard Operations**:
-  - Copy, cut, and paste functionality.
-
-- 📂 **Import/Export**:
-  - Save spreadsheet data as JSON.
-  - Load spreadsheet data from JSON files.
-
-- ⚙️ **Data Validation**:
-  - Validates numeric, text, and date inputs.
-  - Highlights invalid or empty cells.
-
-### **Bonus Features**
-- 📊 **Data Visualization**:
-  - Integrates with Chart.js to create bar, line, and pie charts based on selected data.
-
-- 🔗 **Advanced Formula Handling**:
-  - Supports relative and absolute references (e.g., `A$1`, `$A1`, `$A$1`).
-  - Handles nested formulas like `=SUM(A1:A10)*AVERAGE(B1:B5)`.
-
-- 🔄 **Automatic Updates**:
-  - Dynamically recalculates dependent cells when referenced cells change.
-  - Prevents circular dependencies.
-
-- ➕ **Dynamic Rows and Columns**:
-  - Add and delete rows/columns dynamically.
+3. **ChatGPT-Like Interface**:
+   - A user-friendly web interface with a modern design.
 
 ---
 
-## **Getting Started**
+## **Dependencies**
+The following dependencies are required for the project:
 
-### **1. Prerequisites**
-Ensure you have the following:
-- A modern web browser (Chrome, Firefox, Edge, etc.).
-- Basic knowledge of HTML, CSS, and JavaScript (optional for customization).
+| Dependency      | Version   | Description                                    |
+|------------------|-----------|------------------------------------------------|
+| `express`       | ^4.21.2   | Web framework for building APIs.               |
+| `axios`         | ^1.7.9    | HTTP client for API requests.                  |
+| `dotenv`        | ^16.4.7   | Manages environment variables securely.        |
+| `cors`          | ^2.8.5    | Enables cross-origin requests.                |
+| `body-parser`   | ^1.20.3   | Parses incoming JSON request bodies.           |
+| `fs` (built-in) | N/A       | Handles file operations in Node.js.           |
+| `path` (built-in)| N/A      | Provides utilities for working with file paths.|
+| `natural`       | ^8.0.1    | NLP library for tokenization and processing.   |
+| `cheerio`       | ^1.0.0    | HTML parsing and web scraping.                 |
+| `openai`        | ^4.78.1   | OpenAI SDK for GPT-4 integration.              |
+| `nodemon`       | ^3.1.9    | Auto-restarts the server during development.   |
 
-### **2. Installation**
-1. Clone or download this repository:
-   ```bash
-   git clone https://github.com/your-repo/google-sheets-clone.git
+---
 
+## **Setup Instructions**
+
+### **1. Clone the Repository**
+```bash
+git clone https://github.com/your-username/cdp-chatbot.git
+cd cdp-chatbot
