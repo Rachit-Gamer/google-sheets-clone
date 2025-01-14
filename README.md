@@ -60,3 +60,9 @@ Ensure you have the following:
    ```bash
    git clone https://github.com/your-repo/google-sheets-clone.git
 
+### **2. How to Run??**
+Open the project folder in your preferred editor (e.g., VS Code).
+Start the Live Server to serve the index.html file.
+Open your browser and navigate to http://127.0.0.1:5500 (or the URL provided by Live Server).
+
+
