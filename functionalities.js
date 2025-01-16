@@ -147,6 +147,14 @@ formula.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         if (activeCell) {
             const result = evaluateFormula(formula.value);
+            if (result.startsWith('chart(')) {
+                const match = result.match(/chart\((.*?)\)/);
+                if (match && match[1]) {
+                    const [type, rangeStr] = match[1].split(',');
+                    const range = parseRange(rangeStr.trim());
+                    generateChart(type.trim(), range);
+                }
+            }
             activeCell.innerText = result;
             activeSheetObject[activeCell.id].content = result;
 

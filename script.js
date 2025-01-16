@@ -528,7 +528,7 @@ function getSelectedData() {
 function renderChart(data) {
     const chartContainer = document.getElementById('chart-container');
     if (!chartContainer) {
-        alert("Chart container is missing!");
+        console.log("Chart container is missing!");
         return;
     }
     chartContainer.innerHTML = '<canvas id="chartCanvas"></canvas>';
@@ -560,9 +560,9 @@ function renderChart(data) {
 const chartBtn = document.createElement('button');
 if (chartBtn) {
     chartBtn.addEventListener('click', generateChart);
-    alert("Generate Chart button initialized.");
+    console.log("Generate Chart button initialized.");
 } else {
-    alert("Generate Chart button not found in DOM.");
+    console.log("Generate Chart button not found in DOM.");
 }
 chartBtn.innerText = "Generate Chart";
 chartBtn.className = "generate-chart-btn";
