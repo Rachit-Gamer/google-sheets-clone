@@ -501,10 +501,15 @@ function renderLoadedSpreadsheet() {
 downloadBtn.addEventListener('click', saveSpreadsheet);
 openBtn.addEventListener('change', loadSpreadsheet);
 
+document.querySelector('.open').addEventListener('click', () => {
+    document.getElementById('file-upload').click();
+});
+
+document.getElementById('file-upload').addEventListener('change', loadSpreadsheet);
+
 function generateChart() {
     const selectedData = getSelectedData(); // Extract selected cells
     if (!selectedData.length) {
-        alert("Please select data to visualize!");
         return;
     }
 
