@@ -45,4 +45,7 @@ Ensure you have the following installed on your machine:
 
 ```bash
 git clone <repository_url>
-cd <repository_name></repository_name>
+cd <repository_name>
+```
+
+### Modular Folder Structure
