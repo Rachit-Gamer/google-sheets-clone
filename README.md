@@ -9,19 +9,27 @@ This project is a fully functional spreadsheet-like web application developed fo
 - **Spreadsheet UI**: Interactive interface for managing and editing data.
 - **Mathematical Operations**: Support for basic arithmetic operations such as addition, subtraction, multiplication, and division.
 - **Data Quality Checks**: Built-in tools for validating and ensuring the quality of the data entered.
+- **Cell Formatting**: Options to change font family, font size, bold, italic, underline, text color, and background color.
+- **Row and Column Management**: Add new rows and columns dynamically.
+- **Cell Alignment**: Align text to left, center, or right within cells.
+- **Clipboard Operations**: Copy, cut, and paste functionalities.
+- **Formula Parsing**: Support for custom formulas and cell references.
+- **Multiple Sheets**: Create and manage multiple sheets within the same document.
+- **Save and Load**: Save the spreadsheet data to a file and load it back.
 
 ### Bonus Features
 
-- **Data Visualization**: Graphs and charts for visual representation of data.
+- **Data Visualization**: Generate charts and graphs for visual representation of data.
 - **Advanced Functionalities**: Includes features such as cell referencing, formula parsing, and dynamic updates.
+- **Drag-and-Drop**: Drag and drop cells to rearrange data.
+- **Resizing**: Resize rows and columns by dragging the edges.
 
 ## Dependencies
 
 This project uses the following dependencies:
 
 - **Live Server**: To serve the application locally and ensure smooth development workflow.
-- **JavaScript Libraries**: (Include specific libraries if used, e.g., D3.js for visualization, if applicable).
-- **CSS Framework**: (Include specific frameworks if used, e.g., Bootstrap, TailwindCSS).
+- **Chart.js**: For rendering charts and graphs.
 
 ## Prerequisites
 
@@ -37,40 +45,4 @@ Ensure you have the following installed on your machine:
 
 ```bash
 git clone <repository_url>
-cd <repository_name>
-```
-
-### Install Dependencies:
-
-No external dependencies need installation if using Live Server. If additional libraries are used, include specific instructions here.
-
-### Run the Application:
-
-1. Open the project folder in your preferred editor (e.g., VS Code).
-2. Start the Live Server to serve the `index.html` file.
-3. Open your browser and navigate to `http://127.0.0.1:5500` (or the URL provided by Live Server).
-
-## Usage Instructions
-
-1. Open the spreadsheet interface in your browser.
-2. Start entering data into cells.
-3. Use the toolbar to apply operations, validate data, or visualize data.
-4. Access advanced features such as formulas and dynamic calculations by typing directly into the cells (e.g., `=SUM(A1:A5)`).
-
-## Contribution Guidelines
-
-Contributions are welcome! Follow these steps:
-
-1. Fork the repository.
-2. Create a new feature branch.
-
-```bash
-git checkout -b feature/<feature-name>
-```
-
-3. Commit your changes and push to your forked repository.
-4. Submit a pull request describing your changes.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
+cd <repository_name></repository_name>
