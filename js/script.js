@@ -383,6 +383,10 @@ window.addEventListener('mousemove', (e) => {
             resizingColumn.style.width = `${newWidth}px`;
         } else if (resizingRow) {
             const newHeight = Math.max(startHeight + (e.clientY - startY), 20); // Minimum row height
+            // Apply new height to all cells in the row
+            resizingRow.querySelectorAll('.grid-cell').forEach(cell => {
+                cell.style.height = `${newHeight}px`;
+            });
             resizingRow.style.height = `${newHeight}px`;
         }
     }
