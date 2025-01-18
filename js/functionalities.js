@@ -23,7 +23,7 @@ function applyFunction(range, operation) {
     let values = range.map(cellId => {
         const cell = document.getElementById(cellId);
         const value = cell ? parseFloat(cell.innerText) : null;
-        return !isNaN(value) ? value : null;
+        return !isNaN(value) ? value : null;  
     }).filter(value => value !== null);
 
     if (values.length === 0) return null;
