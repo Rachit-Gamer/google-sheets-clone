@@ -356,7 +356,6 @@ function attachResizeListeners() {
         });
     });
 
-
     document.querySelectorAll('.row > .grid-cell:first-child').forEach(rowHeader => {
         const resizer = document.createElement('div');
         resizer.className = 'row-resizer';
@@ -376,6 +375,11 @@ window.addEventListener('mousemove', (e) => {
     if (isResizing) {
         if (resizingColumn) {
             const newWidth = Math.max(startWidth + (e.clientX - startX), 30); // Minimum column width
+            const columnIndex = Array.from(resizingColumn.parentElement.children).indexOf(resizingColumn);
+            // Apply new width to all cells in the column
+            document.querySelectorAll(`.row > .grid-cell:nth-child(${columnIndex + 1})`).forEach(cell => {
+                cell.style.width = `${newWidth}px`;
+            });
             resizingColumn.style.width = `${newWidth}px`;
         } else if (resizingRow) {
             const newHeight = Math.max(startHeight + (e.clientY - startY), 20); // Minimum row height
