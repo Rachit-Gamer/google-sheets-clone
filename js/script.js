@@ -23,6 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let openBtn = document.querySelector(".open");
     let addRowBtn = document.querySelector('.add-row');
     let addColumnBtn = document.querySelector('.add-column');
+    const newSheetBtn = document.querySelector('.new-sheet');
+
+    if (newSheetBtn) {
+        newSheetBtn.addEventListener('click', () => {
+            sheetsArray.push(createNewSheet());
+            activeSheetIndex = sheetsArray.length - 1;
+            activeSheetObject = sheetsArray[activeSheetIndex];
+            renderLoadedSpreadsheet();
+        });
+    } else {
+        console.error('.new-sheet button not found');
+    }
 
     // Initialize the grid
     function initializeGrid() {
@@ -93,27 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(styleElement);
 
-    function cellFocus(event){
-        let key = event.target.id;
-        addressBar.innerHTML = event.target.id;
-        activeCell = event.target;
-
-        let activeBg = '#c9c8c8';
-        let inactiveBg = '#ecf0f1';
-
-        fontFamilyBtn.value = activeSheetObject[key].fontFamily_data;
-        fontSizeBtn.value = activeSheetObject[key].fontSize_data;
-        boldBtn.style.backgroundColor = activeSheetObject[key].isBold ? activeBg : inactiveBg;
-        italicBtn.style.backgroundColor = activeSheetObject[key].isItalic ? activeBg : inactiveBg;
-        underlineBtn.style.backgroundColor = activeSheetObject[key].isUnderlined ? activeBg : inactiveBg;
-        setAlignmentBg(key, activeBg, inactiveBg);
-        colorBtn.value = activeSheetObject[key].color;
-        bgColorBtn.value = activeSheetObject[key].backgroundColor;
-
-        formula.value = activeCell.innerText;
-
-        document.getElementById(event.target.id.slice(0, 1)).classList.add('row-col-focus');
-        document.getElementById(event.target.id.slice(1)).classList.add('row-col-focus');
+    function cellFocus(event) {
+        const cell = event.target;
+        if (activeCell) {
+            activeCell.classList.remove('active-cell');
+        }
+        activeCell = cell;
+        activeCell.classList.add('active-cell');
+        addressBar.value = activeCell.id;
     }
 
     function cellInput(){
@@ -133,9 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function cellFocusOut(event){
-        document.getElementById(event.target.id.slice(0, 1)).classList.remove('row-col-focus');
-        document.getElementById(event.target.id.slice(1)).classList.remove('row-col-focus');
+    function cellFocusOut(event) {
+        const cell = event.target;
+        if (activeCell === cell) {
+            activeCell.classList.remove('active-cell');
+            activeCell = null;
+        }
     }
 
     function createGrid(rows = 100, columns = 26) {
@@ -530,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cell = document.getElementById(cellId);
 
             if (cell) {
-                cell.innerText = cellData.content;
+                cell.innerText = cellData.content || '';
                 cell.style.fontFamily = cellData.fontFamily_data;
                 cell.style.fontSize = `${cellData.fontSize_data}px`;
                 cell.style.fontWeight = cellData.isBold ? 'bold' : 'normal';
@@ -546,48 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadBtn.addEventListener('click', saveSpreadsheet);
     openBtn.addEventListener('change', loadSpreadsheet);
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const addRowBtn = document.querySelector('.add-row');
-        const addColumnBtn = document.querySelector('.add-column');
-        const downloadBtn = document.querySelector('.download');
-        const openBtn = document.querySelector('.open');
-    
-        if (addRowBtn) {
-            addRowBtn.addEventListener('click', () => {
-                console.log('Row added');
-                // Add row functionality
-            });
-        } else {
-            console.error('.add-row button not found');
-        }
-    
-        if (addColumnBtn) {
-            addColumnBtn.addEventListener('click', () => {
-                console.log('Column added');
-                // Add column functionality
-            });
-        } else {
-            console.error('.add-column button not found');
-        }
-    
-        if (downloadBtn) {
-            downloadBtn.addEventListener('click', () => {
-                console.log('Downloading...');
-                // Save functionality
-            });
-        } else {
-            console.error('.download button not found');
-        }
-    
-        if (openBtn) {
-            openBtn.addEventListener('change', (e) => {
-                console.log('File opened:', e.target.files);
-                // Load functionality
-            });
-        } else {
-            console.error('.open button not found');
-        }
-    });
+    // Removed redundant event listener
     
 
     document.querySelector('.open').addEventListener('click', () => {
@@ -670,6 +631,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeGridInteractions();
 
     function saveAllSheets() {
+        const allSheetsData = sheetsArray.map(sheet => sheet.data);
+        const blob = new Blob([JSON.stringify(allSheetsData)], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'spreadsheet_sheets.json';
+        link.click();
+        console.log("All sheets saved.");
+    }
+
     function loadAllSheets(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -679,24 +649,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const allSheetsData = JSON.parse(e.target.result);
             sheetsArray = allSheetsData.map(data => ({ data }));
             console.log("All sheets loaded:", sheetsArray);
-
-                cell.style.color = cellData.color;
-                cell.style.backgroundColor = cellData.backgroundColor;
-            }
-        }
-        console.log("Sheet rendered.");
-    }
-
-    function validateCellInput(cell) {
-        const value = cell.innerText;
-
-        // Example validation: Ensure numeric values for specific columns
-        if (cell.id.startsWith('A') && isNaN(value)) {
-            alert(`Invalid input in cell ${cell.id}. Please enter a number.`);
-            cell.innerText = '';
-        }
-
-        // Add other validation rules as needed
+            renderLoadedSpreadsheet();
+        };
     }
 
     // Attach input event listener to cells
@@ -728,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (downloadBtn) {
         downloadBtn.addEventListener('click', () => {
             console.log('Downloading...');
-            // Save functionality
+            saveAllSheets();
         });
     } else {
         console.error('.download button not found');
@@ -737,10 +691,68 @@ document.addEventListener('DOMContentLoaded', () => {
     if (openBtn) {
         openBtn.addEventListener('change', (e) => {
             console.log('File opened:', e.target.files);
-            // Load functionality
+            loadAllSheets(e);
         });
     } else {
         console.error('.open button not found');
     }
 });
+
+function createNewSheet() {
+    const newSheet = {};
+    for (let i = 1; i <= 100; i++) {
+        for (let j = 65; j <= 90; j++) {
+            const cellId = String.fromCharCode(j) + i;
+            newSheet[cellId] = { 
+                fontFamily_data: 'monospace',
+                fontSize_data: '14',
+                isBold: false,
+                isItalic: false,
+                textAlign: 'start',
+                isUnderlined: false,
+                color: '#000000',
+                backgroundColor: '#ffffff',
+                content: ''
+            };
+        }
+    }
+    return newSheet;
+}
+
+function renderLoadedSpreadsheet() {
+    for (const cellId in activeSheetObject) {
+        const cellData = activeSheetObject[cellId];
+        const cell = document.getElementById(cellId);
+
+        if (cell) {
+            cell.innerText = cellData.content || '';
+            cell.style.fontFamily = cellData.fontFamily_data;
+            cell.style.fontSize = `${cellData.fontSize_data}px`;
+            cell.style.fontWeight = cellData.isBold ? 'bold' : 'normal';
+            cell.style.fontStyle = cellData.isItalic ? 'italic' : 'normal';
+            cell.style.textDecoration = cellData.isUnderlined ? 'underline' : 'none';
+            cell.style.color = cellData.color;
+            cell.style.backgroundColor = cellData.backgroundColor;
+        }
+    }
+    console.log("Spreadsheet rendered.");
+}
+
+function cellFocus(event) {
+    const cell = event.target;
+    if (activeCell) {
+        activeCell.classList.remove('active-cell');
+    }
+    activeCell = cell;
+    activeCell.classList.add('active-cell');
+    addressBar.value = activeCell.id;
+}
+
+function cellFocusOut(event) {
+    const cell = event.target;
+    if (activeCell === cell) {
+        activeCell.classList.remove('active-cell');
+        activeCell = null;
+    }
+}
 
