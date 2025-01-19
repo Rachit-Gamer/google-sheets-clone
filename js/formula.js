@@ -133,15 +133,20 @@ function updateDependentCells(cellId) {
  * Formula Input Event Handling
  */
 
-// Handle formula input in the formula bar
-formula.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        if (activeCell) {
-            const result = evaluateFormula(formula.value); // Process the formula
-            activeCell.innerText = result; // Update the cell with the result
-            activeSheetObject[activeCell.id].content = result; // Sync the data model
-        }
-        event.preventDefault(); // Prevent default Enter behavior
+document.addEventListener('DOMContentLoaded', () => {
+    // Ensure formula is defined
+    let formula = document.querySelector('.formula-bar');
+
+    if (formula) {
+        formula.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                if (activeCell) {
+                    const result = evaluateFormula(formula.value); // Process the formula
+                    activeCell.innerText = result; // Update the cell with the result
+                    activeSheetObject[activeCell.id].content = result; // Sync the data model
+                }
+                event.preventDefault(); // Prevent default Enter behavior
+            }
+        });
     }
 });
-
