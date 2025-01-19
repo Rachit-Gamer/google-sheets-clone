@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rightBtn = document.querySelector('.end');
     const colorBtn = document.querySelector('#color');
     const bgColorBtn = document.querySelector('#bgcolor');
+    const addressBar = document.querySelector('.address-bar');
 
     function setFont(target) {
         if (activeCell) {
